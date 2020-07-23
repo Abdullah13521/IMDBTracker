@@ -5,7 +5,8 @@ from test import SendMessage
 import lxml
 
 # Enter your account email
-email = "email"
+sender = "email"
+receivers = ["", ""]
 
 top_movies_url = 'https://www.imdb.com/chart/top/'
 top_tv_url = 'https://www.imdb.com/chart/toptv/'
