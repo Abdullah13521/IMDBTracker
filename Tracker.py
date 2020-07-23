@@ -76,16 +76,22 @@ newShows = shows[oldTopShows['Show Title'] != shows['Show Title']]
 # check if there's new top movies
 if len(newMovies) > 0:
     # Send an email to notify
-    titles = newMovies['Movie Title']
-    SendMessage(email, email, "New Movie!", "",
-    "New movies have been added to the top 250!\n" + '\n'.join(titles))
+    titles = '\n'.join(newMovies['Movie Title'])
+
+    # loop through each receiver
+    for receiver in receivers:
+        SendMessage(sender, receiver, "New Top Movie!", "",
+        "New movies have been added to the top 250!\n" + titles)
 
 # check if there's new top shows
 if len(newShows) > 0:
     # Send an email to notify
-    titles = newShows['Show Title']
-    SendMessage(email, email, "New Show!", "",
-    "New shows have been added to the top 250!\n\n" + '\n'.join(titles))
+    titles = '\n'.join(newShows['Show Title'])
+
+    # loop through each receiver
+    for receiver in receivers:
+        SendMessage(sender, receiver, "New Top Show!", "",
+        "New shows have been added to the top 250!\n" + titles)
 
 # export the new files
 movies.to_csv("top_movies.csv", index=False)
