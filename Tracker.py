@@ -33,16 +33,16 @@ def findInfo(soup, actors, titles, directors = None):
     if directors != None:
         for movie in allInfo:
             stars = movie.find('a')['title'].split(',')
-            actors.append(stars[1:])
-            directors.append(stars[:1])
+            actors.append(stars[1])
+            directors.append(stars[0])
             movieTitle = movie.find('a').contents[0]
             titles.append(movieTitle)
     else:
-        for movie in allInfo:
-            stars = movie.find('a')['title'].split(',')
-            actors.append(stars)
-            movieTitle = movie.find('a').contents[0]
-            titles.append(movieTitle)
+        for show in allInfo:
+            stars = show.find('a')['title'].split(',')
+            actors.append(stars[0])
+            showTitle = show.find('a').contents[0]
+            titles.append(showTitle)
 
 movieRatings = []
 tvRatings = []
@@ -92,6 +92,10 @@ if len(newShows) > 0:
     for receiver in receivers:
         SendMessage(sender, receiver, "New Top Show!", "",
         "New shows have been added to the top 250!\n" + titles)
+
+# append to the old data frame and drop duplicates
+movies = movies.append(newMovies).drop_duplicates()
+shows = shows.append(newShows).drop_duplicates()
 
 # export the new files
 movies.to_csv("top_movies.csv", index=False)
